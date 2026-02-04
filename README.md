@@ -24,3 +24,19 @@ ASTRA.CORE is a high-performance Resume-to-Job Description (JD) matching engine.
 ```bash
 git clone [https://github.com/machinelearningrukii/resume-analyzer.git](https://github.com/machinelearningrukii/resume-analyzer.git)
 cd resume-analyzer
+
+##  2. Backend Setup
+cd backend
+python -m venv venv
+# On Windows:
+.\venv\Scripts\activate
+# Install dependencies:
+pip install fastapi uvicorn PyPDF2 python-multipart
+# Run server:
+uvicorn main:app --port 8001 --reload
+
+##   3. Frontend Setup
+# Open a new terminal
+cd frontend
+npm install
+npm run dev

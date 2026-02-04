@@ -32,7 +32,7 @@ ASTRA.CORE operates on a decoupled architecture:
 | **Backend** | Python 3.10, FastAPI, Uvicorn |
 | **Processing** | PyPDF2, Python-Multipart |
 | **API Client** | Axios |
-
+<img width="1894" height="962" alt="image" src="https://github.com/user-attachments/assets/f786a37f-d388-40ab-aee2-d3881eb3ad00" />
 ## 📥 Installation & Setup
 
 ### 1. Clone & Root Entry
@@ -46,6 +46,8 @@ resume-analyzer/
 ├── backend/            # FastAPI (Python) Engine
 │   ├── main.py         # Neural logic & API endpoints
 │   └── requirements.txt
+
+
 ├── frontend/           # React (TypeScript) Dashboard
 │   ├── src/            # UI Components & Logic
 │   └── package.json

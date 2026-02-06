@@ -12,35 +12,38 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.post("/analyze")
+# Use the exact path your vercel.json is looking for
+@app.post("/api/analyze") 
 async def analyze(file: UploadFile = File(...), jd: str = Form(...)):
-    # Read the actual PDF uploaded by the user
     content = await file.read()
     pdf_reader = PyPDF2.PdfReader(io.BytesIO(content))
     cv_text = ""
     for page in pdf_reader.pages:
         cv_text += page.extract_text().lower()
 
-    # Create a list of skills found in the Job Description text
-    # This makes the analysis "real"
     possible_skills = ["javascript", "golang", "python", "php", "node.js", "jwt", "sql", "mysql", "mongodb", "redis", "git", "linux", "wordpress", "aws", "docker"]
     
     jd_lower = jd.lower()
     required_skills = [s for s in possible_skills if s in jd_lower]
     
     if not required_skills:
-        required_skills = ["git", "api", "communication"] # Fallback
+        required_skills = ["git", "api", "communication"]
 
-    # Match CV against JD
     matched = [s for s in required_skills if s in cv_text]
     missing = [s for s in required_skills if s not in cv_text]
 
-    # Calculate a REAL score
     actual_score = int((len(matched) / len(required_skills)) * 100)
+
+    # Added safety check for empty 'missing' list
+    suggestion = "Excellent alignment!"
+    if len(missing) >= 2:
+        suggestion = f"Focus on learning {missing[0]} and {missing[1]} to improve alignment."
+    elif len(missing) == 1:
+        suggestion = f"Focus on learning {missing[0]} to improve alignment."
 
     return {
         "score": actual_score,
         "match_keywords": matched,
         "missing_keywords": missing,
-        "suggestions": f"Focus on learning {missing[0]} and {missing[1]} to improve alignment." if len(missing) > 1 else "Excellent alignment!"
+        "suggestions": suggestion
     }

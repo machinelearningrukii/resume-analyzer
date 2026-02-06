@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { 
-  Upload, Cpu, CheckCircle, XCircle, FileText, 
-  AlertTriangle, Lightbulb, Loader2, Target, 
+  Upload, Cpu, CheckCircle, XCircle, 
+  Loader2, 
   ShieldCheck, ArrowUpRight, Fingerprint, 
   Activity, Terminal, Globe, Zap
 } from 'lucide-react';
@@ -18,7 +18,6 @@ export default function App() {
     setLogs(prev => [msg, ...prev].slice(0, 5));
   };
 
-  // Reset results when file or JD changes to ensure user knows it's a new session
   useEffect(() => {
     setResult(null);
   }, [file, jd]);
@@ -29,7 +28,6 @@ export default function App() {
       return;
     }
 
-    // CRITICAL: Clear previous results and start loading
     setResult(null);
     setLoading(true);
     addLog(`Scanning CV: ${file.name}...`);
@@ -39,14 +37,9 @@ export default function App() {
     formData.append('jd', jd);
 
     try {
-      // Added a timestamp parameter to prevent API caching
-      const res = await axios.post(`http://127.0.0.1:8001/analyze?t=${Date.now()}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form- HarrisData',
-        }
-      });
+      // Changed to the relative Vercel path to match vercel.json rewrites
+      const res = await axios.post('/api/analyze', formData);
 
-      // Synthetic delay to allow the "Neural Decryption" animation to play (looks better for Viva)
       setTimeout(() => {
         setResult(res.data);
         addLog(`Analysis Complete: Match Index ${res.data.score}%`);
@@ -62,12 +55,9 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#020203] text-slate-400 font-sans selection:bg-blue-500/30 overflow-x-hidden">
-      {/* Engineering Grid Overlay */}
       <div className="fixed inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
       
       <div className="relative z-10 max-w-[1500px] mx-auto px-8 py-10">
-        
-        {/* TOP COMMAND BAR */}
         <nav className="flex items-center justify-between mb-12 p-6 bg-slate-900/10 backdrop-blur-2xl border border-white/5 rounded-3xl shadow-2xl">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-blue-600 rounded-2xl shadow-[0_0_20px_rgba(37,99,235,0.4)]">
@@ -92,8 +82,6 @@ export default function App() {
         </nav>
 
         <main className="grid lg:grid-cols-12 gap-10">
-          
-          {/* LEFT: INPUT QUADRANT */}
           <div className="lg:col-span-4 space-y-8">
             <div className="bg-[#080809] border border-white/5 rounded-[40px] p-8 space-y-8 shadow-2xl relative overflow-hidden group">
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
@@ -148,7 +136,6 @@ export default function App() {
               </button>
             </div>
 
-            {/* LIVE SYSTEM LOGS */}
             <div className="bg-black/40 border border-white/5 rounded-3xl p-6 font-mono text-[10px] space-y-2 uppercase shadow-inner">
               {logs.map((log, i) => (
                 <div key={i} className={i === 0 ? "text-blue-400" : "text-slate-700"}>
@@ -158,7 +145,6 @@ export default function App() {
             </div>
           </div>
 
-          {/* RIGHT: OUTPUT QUADRANT */}
           <div className="lg:col-span-8">
             <div className="h-full bg-slate-900/5 backdrop-blur-3xl border border-white/5 rounded-[50px] p-12 relative overflow-hidden flex flex-col items-center justify-center min-h-[700px] shadow-2xl">
               
@@ -236,7 +222,7 @@ export default function App() {
                     <Zap className="absolute -right-8 -bottom-8 text-blue-500/10 -rotate-12 group-hover:scale-110 group-hover:text-blue-500/20 transition-all duration-1000" size={200} />
                     <div className="relative space-y-4">
                       <h4 className="text-[10px] font-black text-blue-500 uppercase tracking-[0.3em] flex items-center gap-2">
-                         Strategic Advisor
+                          Strategic Advisor
                       </h4>
                       <p className="text-slate-200 text-xl leading-relaxed italic font-light max-w-2xl">
                         "{result.suggestions}"

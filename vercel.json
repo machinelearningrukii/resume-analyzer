@@ -4,7 +4,7 @@
     { "src": "backend/main.py", "use": "@vercel/python" }
   ],
   "rewrites": [
-    { "source": "/analyze", "destination": "backend/main.py" },
+    { "source": "/api/analyze", "destination": "api/index.py" },
     { "source": "/(.*)", "destination": "frontend/$1" }
   ]
 }

@@ -37,7 +37,7 @@ ASTRA.CORE operates on a decoupled architecture:
 
 ### 1. Clone & Root Entry
 ```bash
-git clone [https://github.com/machinelearningrukii/resume-analyzer.git](https://github.com/machinelearningrukii/resume-analyzer.git)
+git clone [https://github.com/machinelearningrukii/Astra-Core-resume-analyzer.git](https://github.com/machinelearningrukii/Astra-Core-resume-analyzer.git)
 cd resume-analyzer
 ## 🏗️ Project Structure
 This repository contains both the frontend and backend services:

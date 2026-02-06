@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { 
   Upload, Cpu, CheckCircle, XCircle, 
-  Loader2, 
-  ShieldCheck, ArrowUpRight, Fingerprint, 
-  Activity, Terminal, Globe, Zap
+  Loader2, ArrowUpRight, Fingerprint, 
+  Activity, Terminal, Globe, Zap, ShieldCheck
 } from 'lucide-react';
 
 export default function App() {
@@ -37,7 +36,7 @@ export default function App() {
     formData.append('jd', jd);
 
     try {
-      // Changed to the relative Vercel path to match vercel.json rewrites
+      // PRODUCTION LINK: This matches your vercel.json rewrite
       const res = await axios.post('/api/analyze', formData);
 
       setTimeout(() => {
@@ -68,7 +67,6 @@ export default function App() {
               <p className="text-[9px] font-mono tracking-[0.3em] text-blue-500/60 uppercase italic">Neural Auditor v3.0</p>
             </div>
           </div>
-          
           <div className="hidden md:flex items-center gap-12 font-mono text-[10px]">
             <div className="space-y-1">
               <p className="text-slate-600 uppercase">Processing Node</p>
@@ -87,7 +85,6 @@ export default function App() {
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
                 <Globe size={100} />
               </div>
-
               <div className="space-y-4 relative">
                 <label className="text-[10px] font-black tracking-[0.2em] text-slate-500 uppercase flex items-center gap-2">
                   <Terminal size={14} className="text-blue-500" /> Target Requirements
@@ -99,43 +96,20 @@ export default function App() {
                   onChange={(e) => setJd(e.target.value)}
                 />
               </div>
-
               <div className="space-y-4">
                 <label className="text-[10px] font-black tracking-[0.2em] text-slate-500 uppercase flex items-center gap-2">
                   <ShieldCheck size={14} className="text-emerald-500" /> Source Identity
                 </label>
                 <div className="relative group border-2 border-dashed border-white/5 rounded-3xl p-10 hover:border-blue-500/30 hover:bg-blue-500/5 transition-all cursor-pointer text-center">
-                  <input 
-                    type="file" 
-                    onChange={(e) => setFile(e.target.files?.[0] || null)} 
-                    className="absolute inset-0 opacity-0 z-20 cursor-pointer" 
-                  />
+                  <input type="file" onChange={(e) => setFile(e.target.files?.[0] || null)} className="absolute inset-0 opacity-0 z-20 cursor-pointer" />
                   <Upload size={32} className={`mx-auto mb-4 ${file ? 'text-blue-500' : 'text-slate-700'} group-hover:text-blue-500 transition-colors`} />
-                  <p className="text-xs font-bold text-slate-500 uppercase tracking-tight">
-                    {file ? file.name : "Inject Candidate PDF"}
-                  </p>
+                  <p className="text-xs font-bold text-slate-500 uppercase tracking-tight">{file ? file.name : "Inject Candidate PDF"}</p>
                 </div>
               </div>
-
-              <button 
-                onClick={handleAnalyze}
-                disabled={loading}
-                className="w-full py-6 bg-white text-black font-black rounded-[24px] hover:bg-blue-600 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-500 flex items-center justify-center gap-4 group shadow-xl"
-              >
-                {loading ? (
-                  <>
-                    <Loader2 className="animate-spin" />
-                    <span className="tracking-widest text-xs">ANALYZING...</span>
-                  </>
-                ) : (
-                  <>
-                    <span className="tracking-widest text-xs">INITIATE SCAN</span>
-                    <ArrowUpRight size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                  </>
-                )}
+              <button onClick={handleAnalyze} disabled={loading} className="w-full py-6 bg-white text-black font-black rounded-[24px] hover:bg-blue-600 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-500 flex items-center justify-center gap-4 group shadow-xl">
+                {loading ? <><Loader2 className="animate-spin" /> <span className="tracking-widest text-xs">ANALYZING...</span></> : <><span className="tracking-widest text-xs">INITIATE SCAN</span> <ArrowUpRight size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" /></>}
               </button>
             </div>
-
             <div className="bg-black/40 border border-white/5 rounded-3xl p-6 font-mono text-[10px] space-y-2 uppercase shadow-inner">
               {logs.map((log, i) => (
                 <div key={i} className={i === 0 ? "text-blue-400" : "text-slate-700"}>
@@ -147,7 +121,6 @@ export default function App() {
 
           <div className="lg:col-span-8">
             <div className="h-full bg-slate-900/5 backdrop-blur-3xl border border-white/5 rounded-[50px] p-12 relative overflow-hidden flex flex-col items-center justify-center min-h-[700px] shadow-2xl">
-              
               {!result && !loading && (
                 <div className="text-center opacity-30 flex flex-col items-center">
                   <div className="relative mb-8">
@@ -157,7 +130,6 @@ export default function App() {
                   <p className="font-mono text-xs tracking-[0.5em] uppercase">System Idle // Awaiting Input Stream</p>
                 </div>
               )}
-
               {loading && (
                 <div className="text-center space-y-8">
                   <div className="relative flex items-center justify-center">
@@ -167,7 +139,6 @@ export default function App() {
                   <p className="font-mono text-[10px] text-blue-500 animate-pulse tracking-[0.4em] uppercase">Decrypting Neural Experience Patterns...</p>
                 </div>
               )}
-
               {result && (
                 <div className="w-full space-y-12 animate-in fade-in slide-in-from-bottom-10 duration-1000">
                   <div className="flex flex-col md:flex-row items-center gap-12">
@@ -179,54 +150,34 @@ export default function App() {
                         <span className="text-2xl font-bold text-white/20 mt-2">%</span>
                       </div>
                     </div>
-                    
                     <div className="space-y-4 text-center md:text-left">
-                      <div className="inline-block px-4 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-[10px] font-bold text-emerald-500 tracking-widest uppercase">
-                        Integrity Verified
-                      </div>
-                      <h2 className="text-6xl font-black text-white tracking-tighter max-w-md leading-[0.85] uppercase">
-                        Candidate <br/> <span className="text-blue-500">Audit Report</span>
-                      </h2>
+                      <div className="inline-block px-4 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-[10px] font-bold text-emerald-500 tracking-widest uppercase">Integrity Verified</div>
+                      <h2 className="text-6xl font-black text-white tracking-tighter max-w-md leading-[0.85] uppercase">Candidate <br/> <span className="text-blue-500">Audit Report</span></h2>
                     </div>
                   </div>
-
                   <div className="grid md:grid-cols-2 gap-8">
                     <div className="p-8 bg-white/[0.02] border border-white/5 rounded-[40px] group hover:bg-emerald-500/[0.05] transition-all duration-500">
-                      <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
-                        <CheckCircle size={16} className="text-emerald-500" /> Neural Matches
-                      </h4>
+                      <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-6 flex items-center gap-2"><CheckCircle size={16} className="text-emerald-500" /> Neural Matches</h4>
                       <div className="flex flex-wrap gap-2">
                         {result.match_keywords.map((kw: string) => (
-                          <span key={kw} className="px-4 py-2 bg-black text-white border border-white/10 rounded-xl text-[10px] font-bold uppercase tracking-wider hover:border-emerald-500/50 transition-colors">
-                            {kw}
-                          </span>
+                          <span key={kw} className="px-4 py-2 bg-black text-white border border-white/10 rounded-xl text-[10px] font-bold uppercase tracking-wider hover:border-emerald-500/50 transition-colors">{kw}</span>
                         ))}
                       </div>
                     </div>
-                    
                     <div className="p-8 bg-white/[0.02] border border-white/5 rounded-[40px] group hover:bg-rose-500/[0.05] transition-all duration-500">
-                      <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
-                        <XCircle size={16} className="text-rose-500" /> Semantic Gaps
-                      </h4>
+                      <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-6 flex items-center gap-2"><XCircle size={16} className="text-rose-500" /> Semantic Gaps</h4>
                       <div className="flex flex-wrap gap-2">
                         {result.missing_keywords.map((kw: string) => (
-                          <span key={kw} className="px-4 py-2 bg-black text-rose-500/80 border border-rose-500/20 rounded-xl text-[10px] font-bold uppercase tracking-wider hover:border-rose-500/50 transition-colors">
-                            {kw}
-                          </span>
+                          <span key={kw} className="px-4 py-2 bg-black text-rose-500/80 border border-rose-500/20 rounded-xl text-[10px] font-bold uppercase tracking-wider hover:border-rose-500/50 transition-colors">{kw}</span>
                         ))}
                       </div>
                     </div>
                   </div>
-
                   <div className="p-10 bg-gradient-to-br from-blue-600/10 via-transparent to-transparent border border-white/5 border-l-8 border-l-blue-500 rounded-[40px] relative overflow-hidden group shadow-2xl">
                     <Zap className="absolute -right-8 -bottom-8 text-blue-500/10 -rotate-12 group-hover:scale-110 group-hover:text-blue-500/20 transition-all duration-1000" size={200} />
                     <div className="relative space-y-4">
-                      <h4 className="text-[10px] font-black text-blue-500 uppercase tracking-[0.3em] flex items-center gap-2">
-                          Strategic Advisor
-                      </h4>
-                      <p className="text-slate-200 text-xl leading-relaxed italic font-light max-w-2xl">
-                        "{result.suggestions}"
-                      </p>
+                      <h4 className="text-[10px] font-black text-blue-500 uppercase tracking-[0.3em] flex items-center gap-2">Strategic Advisor</h4>
+                      <p className="text-slate-200 text-xl leading-relaxed italic font-light max-w-2xl">"{result.suggestions}"</p>
                     </div>
                   </div>
                 </div>

@@ -1,23 +1,10 @@
 {
   "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": { "distDir": "dist" }
-    },
-    {
-      "src": "api/index.py",
-      "use": "@vercel/python"
-    }
+    { "src": "frontend/package.json", "use": "@vercel/static-build" },
+    { "src": "backend/main.py", "use": "@vercel/python" }
   ],
   "rewrites": [
-    {
-      "source": "/api/analyze",
-      "destination": "api/index.py"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/app.tsx"
-    }
+    { "source": "/api/analyze", "destination": "backend/main.py" },
+    { "source": "/(.*)", "destination": "frontend/$1" }
   ]
 }

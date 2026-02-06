@@ -12,7 +12,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Use the exact path your vercel.json is looking for
+
 @app.post("/api/analyze") 
 async def analyze(file: UploadFile = File(...), jd: str = Form(...)):
     content = await file.read()
@@ -34,7 +34,7 @@ async def analyze(file: UploadFile = File(...), jd: str = Form(...)):
 
     actual_score = int((len(matched) / len(required_skills)) * 100)
 
-    # Added safety check for empty 'missing' list
+ 
     suggestion = "Excellent alignment!"
     if len(missing) >= 2:
         suggestion = f"Focus on learning {missing[0]} and {missing[1]} to improve alignment."

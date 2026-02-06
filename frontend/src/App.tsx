@@ -40,11 +40,7 @@ export default function App() {
 
     try {
       // Added a timestamp parameter to prevent API caching
-      const res = await axios.post(`http://127.0.0.1:8001/analyze?t=${Date.now()}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form- HarrisData',
-        }
-      });
+const res = await axios.post('/analyze', formData);;
 
       // Synthetic delay to allow the "Neural Decryption" animation to play (looks better for Viva)
       setTimeout(() => {

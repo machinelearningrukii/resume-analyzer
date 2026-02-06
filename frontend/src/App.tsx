@@ -5,7 +5,6 @@ import {
   Loader2, ArrowUpRight, Fingerprint, 
   Activity, Terminal, Globe, Zap, ShieldCheck
 } from 'lucide-react';
-
 export default function App() {
   const [file, setFile] = useState<File | null>(null);
   const [jd, setJd] = useState<string>('');
@@ -54,9 +53,9 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#020203] text-slate-400 font-sans selection:bg-blue-500/30 overflow-x-hidden">
-      <div className="fixed inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
+      <div className="fixed inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[40px_40px] pointer-events-none" />
       
-      <div className="relative z-10 max-w-[1500px] mx-auto px-8 py-10">
+      <div className="relative z-10 max-w-375 mx-auto px-8 py-10">
         <nav className="flex items-center justify-between mb-12 p-6 bg-slate-900/10 backdrop-blur-2xl border border-white/5 rounded-3xl shadow-2xl">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-blue-600 rounded-2xl shadow-[0_0_20px_rgba(37,99,235,0.4)]">
@@ -106,7 +105,7 @@ export default function App() {
                   <p className="text-xs font-bold text-slate-500 uppercase tracking-tight">{file ? file.name : "Inject Candidate PDF"}</p>
                 </div>
               </div>
-              <button onClick={handleAnalyze} disabled={loading} className="w-full py-6 bg-white text-black font-black rounded-[24px] hover:bg-blue-600 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-500 flex items-center justify-center gap-4 group shadow-xl">
+              <button onClick={handleAnalyze} disabled={loading} className="w-full py-6 bg-white text-black font-black rounded-3xl hover:bg-blue-600 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-500 flex items-center justify-center gap-4 group shadow-xl">
                 {loading ? <><Loader2 className="animate-spin" /> <span className="tracking-widest text-xs">ANALYZING...</span></> : <><span className="tracking-widest text-xs">INITIATE SCAN</span> <ArrowUpRight size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" /></>}
               </button>
             </div>
@@ -120,7 +119,7 @@ export default function App() {
           </div>
 
           <div className="lg:col-span-8">
-            <div className="h-full bg-slate-900/5 backdrop-blur-3xl border border-white/5 rounded-[50px] p-12 relative overflow-hidden flex flex-col items-center justify-center min-h-[700px] shadow-2xl">
+            <div className="h-full bg-slate-900/5 backdrop-blur-3xl border border-white/5 rounded-[50px] p-12 relative overflow-hidden flex flex-col items-center justify-center min-h-175 shadow-2xl">
               {!result && !loading && (
                 <div className="text-center opacity-30 flex flex-col items-center">
                   <div className="relative mb-8">
@@ -156,7 +155,7 @@ export default function App() {
                     </div>
                   </div>
                   <div className="grid md:grid-cols-2 gap-8">
-                    <div className="p-8 bg-white/[0.02] border border-white/5 rounded-[40px] group hover:bg-emerald-500/[0.05] transition-all duration-500">
+                    <div className="p-8 bg-white/2 border border-white/5 rounded-[40px] group hover:bg-emerald-500/5 transition-all duration-500">
                       <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-6 flex items-center gap-2"><CheckCircle size={16} className="text-emerald-500" /> Neural Matches</h4>
                       <div className="flex flex-wrap gap-2">
                         {result.match_keywords.map((kw: string) => (
@@ -164,7 +163,7 @@ export default function App() {
                         ))}
                       </div>
                     </div>
-                    <div className="p-8 bg-white/[0.02] border border-white/5 rounded-[40px] group hover:bg-rose-500/[0.05] transition-all duration-500">
+                    <div className="p-8 bg-white/2 border border-white/5 rounded-[40px] group hover:bg-rose-500/5 transition-all duration-500">
                       <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-6 flex items-center gap-2"><XCircle size={16} className="text-rose-500" /> Semantic Gaps</h4>
                       <div className="flex flex-wrap gap-2">
                         {result.missing_keywords.map((kw: string) => (
@@ -173,7 +172,7 @@ export default function App() {
                       </div>
                     </div>
                   </div>
-                  <div className="p-10 bg-gradient-to-br from-blue-600/10 via-transparent to-transparent border border-white/5 border-l-8 border-l-blue-500 rounded-[40px] relative overflow-hidden group shadow-2xl">
+                  <div className="p-10 bg-linear-to-br from-blue-600/10 via-transparent to-transparent border border-white/5 border-l-8 border-l-blue-500 rounded-[40px] relative overflow-hidden group shadow-2xl">
                     <Zap className="absolute -right-8 -bottom-8 text-blue-500/10 -rotate-12 group-hover:scale-110 group-hover:text-blue-500/20 transition-all duration-1000" size={200} />
                     <div className="relative space-y-4">
                       <h4 className="text-[10px] font-black text-blue-500 uppercase tracking-[0.3em] flex items-center gap-2">Strategic Advisor</h4>

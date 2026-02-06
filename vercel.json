@@ -1,10 +1,11 @@
 {
+  "version": 2,
   "builds": [
-    { "src": "frontend/package.json", "use": "@vercel/static-build" },
-    { "src": "backend/main.py", "use": "@vercel/python" }
+    { "src": "api/index.py", "use": "@vercel/python" },
+    { "src": "frontend/package.json", "use": "@vercel/static-build" }
   ],
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/main.py" },
-    { "source": "/(.*)", "destination": "/frontend/$1"}
+    { "source": "/api/(.*)", "destination": "api/index.py" },
+    { "source": "/(.*)", "destination": "/frontend/$1" }
   ]
 }

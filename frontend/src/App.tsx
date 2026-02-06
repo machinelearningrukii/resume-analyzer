@@ -39,7 +39,7 @@ export default function App() {
 
     try {
       // Added a timestamp parameter to prevent API caching
-const res = await axios.post('/analyze', formData);;
+      const res = await axios.post('/api/analyze', formData);
 
       // Synthetic delay to allow the "Neural Decryption" animation to play (looks better for Viva)
       setTimeout(() => {

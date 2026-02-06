@@ -1,8 +1,8 @@
-import  { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { 
-  Upload, Cpu, CheckCircle, XCircle, 
-   Loader2, 
+  Upload, Cpu, CheckCircle, XCircle, FileText, 
+  AlertTriangle, Lightbulb, Loader2, Target, 
   ShieldCheck, ArrowUpRight, Fingerprint, 
   Activity, Terminal, Globe, Zap
 } from 'lucide-react';
@@ -40,7 +40,11 @@ export default function App() {
 
     try {
       // Added a timestamp parameter to prevent API caching
-      const res = await axios.post('/api/analyze', formData);
+      const res = await axios.post(`http://127.0.0.1:8001/analyze?t=${Date.now()}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form- HarrisData',
+        }
+      });
 
       // Synthetic delay to allow the "Neural Decryption" animation to play (looks better for Viva)
       setTimeout(() => {

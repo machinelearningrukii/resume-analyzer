@@ -2,11 +2,11 @@
   "rewrites": [
     {
       "source": "/analyze",
-      "destination": "/api/main"
+      "destination": "/backend/main.py"
     },
     {
       "source": "/(.*)",
-      "destination": "/frontend/$1"
+      "destination": "/index.html"
     }
   ]
 }
